@@ -7,6 +7,7 @@ For detailed rules, read:
 - `content-rewrite.md` for extraction and copy polishing.
 - `layout-recipes.md` for information architecture.
 - `design-modes.md` for visual direction.
+- `guizang-style-presets.md` for Guizang-inspired editorial ink, Swiss, social card, and launch-slide modes.
 - `readability-export.md` for screenshot sizing.
 - `qa-checklist.md` for the full delivery checklist.
 

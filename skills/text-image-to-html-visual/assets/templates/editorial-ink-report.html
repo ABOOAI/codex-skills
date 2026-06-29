@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="ink-classic">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Editorial Ink Report</title>
+  <style>
+    :root {
+      --paper: #f3f0e8;
+      --paper-2: #ebe6da;
+      --ink: #0a0a0b;
+      --muted: #68625a;
+      --line: rgba(10,10,11,.22);
+      --accent: #111111;
+      --accent-soft: #d8d2c6;
+    }
+
+    [data-theme="indigo-porcelain"] {
+      --paper: #f2f4f5;
+      --paper-2: #e5ebef;
+      --ink: #0a1f3d;
+      --muted: #5f6d78;
+      --line: rgba(10,31,61,.20);
+      --accent: #315d93;
+      --accent-soft: #d7e1ec;
+    }
+
+    [data-theme="forest-ink"] {
+      --paper: #f5f1e8;
+      --paper-2: #e8dfcf;
+      --ink: #16251b;
+      --muted: #5d665d;
+      --line: rgba(22,37,27,.22);
+      --accent: #2e6b4f;
+      --accent-soft: #d4dfd2;
+    }
+
+    [data-theme="kraft-paper"] {
+      --paper: #eedfc7;
+      --paper-2: #dfc9a8;
+      --ink: #2a1e13;
+      --muted: #755f49;
+      --line: rgba(42,30,19,.24);
+      --accent: #9b5a2e;
+      --accent-soft: #d5b58f;
+    }
+
+    [data-theme="dune"] {
+      --paper: #f0e6d2;
+      --paper-2: #ded0b7;
+      --ink: #1f1a14;
+      --muted: #6f6557;
+      --line: rgba(31,26,20,.22);
+      --accent: #8f7650;
+      --accent-soft: #d4c2a4;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: "Inter", "Segoe UI", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+      letter-spacing: 0;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .42;
+      background:
+        repeating-linear-gradient(0deg, rgba(0,0,0,.025) 0 1px, transparent 1px 5px),
+        repeating-linear-gradient(90deg, rgba(255,255,255,.20) 0 1px, transparent 1px 7px);
+      mix-blend-mode: multiply;
+    }
+
+    .page {
+      position: relative;
+      width: 1440px;
+      min-height: 100vh;
+      margin: 0 auto;
+      padding: 76px 84px 96px;
+      overflow: hidden;
+    }
+
+    .wash {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: .72;
+      background:
+        linear-gradient(120deg, rgba(255,255,255,.24), transparent 42%),
+        repeating-radial-gradient(ellipse at 14% 8%, rgba(0,0,0,.030) 0 1px, transparent 1px 18px),
+        repeating-radial-gradient(ellipse at 86% 76%, rgba(0,0,0,.024) 0 1px, transparent 1px 22px);
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .issue-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 32px;
+      align-items: center;
+      padding-bottom: 22px;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 18px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .18em;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 58px;
+      align-items: end;
+      padding: 58px 0 54px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    h1 {
+      margin: 0;
+      color: var(--ink);
+      font-family: "Noto Serif SC", "Songti SC", "SimSun", Georgia, serif;
+      font-size: 82px;
+      font-weight: 500;
+      line-height: 1.08;
+      letter-spacing: .03em;
+    }
+
+    .dek {
+      margin: 28px 0 0;
+      color: var(--muted);
+      font-size: 29px;
+      line-height: 1.55;
+      font-weight: 500;
+    }
+
+    .pull {
+      padding: 34px 36px;
+      border-left: 8px solid var(--accent);
+      background: color-mix(in srgb, var(--paper-2) 68%, transparent);
+    }
+
+    .pull p {
+      margin: 0;
+      font-family: "Noto Serif SC", "Songti SC", "SimSun", Georgia, serif;
+      font-size: 38px;
+      line-height: 1.32;
+      font-weight: 500;
+    }
+
+    .pull span {
+      display: block;
+      margin-top: 20px;
+      color: var(--muted);
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .section {
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      gap: 50px;
+      padding: 46px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .marginal {
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.45;
+      font-weight: 700;
+      letter-spacing: .10em;
+      text-transform: uppercase;
+    }
+
+    .section h2 {
+      margin: 0 0 24px;
+      font-family: "Noto Serif SC", "Songti SC", "SimSun", Georgia, serif;
+      font-size: 48px;
+      line-height: 1.18;
+      font-weight: 500;
+      letter-spacing: .02em;
+    }
+
+    .lead {
+      margin: 0 0 26px;
+      color: var(--ink);
+      font-size: 28px;
+      line-height: 1.55;
+      font-weight: 500;
+    }
+
+    .ledger {
+      display: grid;
+      border-top: 1px solid var(--line);
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 88px 1fr;
+      gap: 28px;
+      padding: 24px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .row-num {
+      color: var(--accent);
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: .08em;
+    }
+
+    .row h3 {
+      margin: 0 0 10px;
+      font-family: "Noto Serif SC", "Songti SC", "SimSun", Georgia, serif;
+      font-size: 31px;
+      line-height: 1.25;
+      font-weight: 550;
+    }
+
+    .row p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 23px;
+      line-height: 1.48;
+      font-weight: 500;
+    }
+
+    .evidence {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      margin-top: 28px;
+    }
+
+    .plate {
+      min-height: 260px;
+      padding: 28px;
+      border: 1px solid var(--line);
+      background: color-mix(in srgb, var(--paper-2) 76%, transparent);
+    }
+
+    .plate strong {
+      display: block;
+      margin-bottom: 14px;
+      font-family: "Noto Serif SC", "Songti SC", "SimSun", Georgia, serif;
+      font-size: 30px;
+      font-weight: 550;
+      line-height: 1.22;
+    }
+
+    .plate span {
+      color: var(--muted);
+      font-size: 22px;
+      line-height: 1.45;
+      font-weight: 500;
+    }
+
+    .closing {
+      padding-top: 48px;
+      display: grid;
+      grid-template-columns: .85fr 1.15fr;
+      gap: 42px;
+      align-items: start;
+    }
+
+    .closing h2 {
+      margin: 0;
+      font-family: "Noto Serif SC", "Songti SC", "SimSun", Georgia, serif;
+      font-size: 56px;
+      line-height: 1.14;
+      font-weight: 500;
+    }
+
+    .note {
+      padding: 28px 32px;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      background: color-mix(in srgb, var(--paper-2) 65%, transparent);
+      font-size: 22px;
+      line-height: 1.55;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="wash"></div>
+    <div class="content">
+      <div class="issue-row">
+        <span>Text Image Reconstruction / Editorial Ink</span>
+        <span>Issue 01</span>
+      </div>
+
+      <header class="hero">
+        <div>
+          <h1>把参考图改写成一页有节奏的杂志式长图</h1>
+          <p class="dek">这里放 1-2 句核心摘要。保留来源事实，但把原图的密集表达改成更像专题解读的阅读路径。</p>
+        </div>
+        <aside class="pull">
+          <p>先建立判断，再展示证据；先让读者理解，再让读者复核。</p>
+          <span>Core Thesis</span>
+        </aside>
+      </header>
+
+      <section class="section">
+        <aside class="marginal">01 / Source Logic</aside>
+        <div>
+          <h2>先抽取事实，再重新组织叙事</h2>
+          <p class="lead">把参考图中的产品名、数字、限制、例外和时间点列成事实清单。删除水印、平台口号和重复标题，保留会影响判断的信息。</p>
+          <div class="ledger">
+            <div class="row">
+              <div class="row-num">01</div>
+              <div>
+                <h3>核心结论</h3>
+                <p>一句话说明这张图真正帮助读者判断什么。</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="row-num">02</div>
+              <div>
+                <h3>关键证据</h3>
+                <p>用短句重写来源数字、条件和差异，避免长串斜杠。</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="row-num">03</div>
+              <div>
+                <h3>使用边界</h3>
+                <p>把限制、待确认和免责声明放在读者能看到的位置。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <aside class="marginal">02 / Evidence</aside>
+        <div>
+          <h2>每个模块只承担一个观点</h2>
+          <p class="lead">如果来源图很密，拆成几个专题模块。每个模块有标题、证据和解释，不把全部信息塞进一个表格。</p>
+          <div class="evidence">
+            <article class="plate">
+              <strong>模块 A：变化点</strong>
+              <span>放前后对比、升级点、核心数字或一条最重要的限制。</span>
+            </article>
+            <article class="plate">
+              <strong>模块 B：适合谁</strong>
+              <span>用来源信息支持决策，不加入没有证据的推荐。</span>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="closing">
+        <h2>结尾必须回到读者怎么用</h2>
+        <div class="note">本模板适合文章图、产品解读、保险/金融说明、政策变化拆解。交付前替换全部占位文字，确认所有数字与来源图一致，并运行 HTML 可读性校验。</div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

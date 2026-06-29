@@ -14,7 +14,7 @@ Personal repository for reusable Codex skills.
 
 Turn a text-heavy reference image into a polished HTML visual. The skill is designed for screenshots, posters, dense tables, comparison charts, and infographic-like images where the user wants a clearer, better-designed output instead of a pixel-level recreation.
 
-The upgraded version uses a modular production workflow: source extraction, copy rewriting, information architecture, design-mode selection, reusable HTML templates, readability QA, and high-resolution screenshot export.
+The upgraded version uses a modular production workflow: source extraction, copy rewriting, information architecture, design-mode selection, reusable HTML templates, readability QA, and high-resolution screenshot export. It also includes Guizang-inspired style presets for editorial ink, Swiss grid, social-card, and launch-slide visuals.
 
 Core workflow:
 
@@ -22,7 +22,7 @@ Core workflow:
 2. Remove irrelevant platform branding, watermarks, and decorative text when requested.
 3. Rewrite dense copy into clearer user-facing language while preserving the core facts.
 4. Redesign the information architecture into conclusion cards, item cards, key differences, grouped matrices, or long-report sections.
-5. Select a suitable visual mode such as orange-white decision page, clean report, Swiss grid, or magazine explainer.
+5. Select a suitable visual mode such as orange-white decision page, clean report, Guizang-inspired editorial ink, Swiss International grid, social card, or launch-slide.
 6. Build a standalone HTML page using reusable templates when appropriate.
 7. Validate readability, dense table cells, font sizes, and output profile.
 8. Ask the user to confirm the HTML direction before final export.
@@ -40,7 +40,7 @@ Best for:
 
 将文字密集的参考图重构为更清晰、更美观的 HTML 视觉页面。适用于截图、海报、密集表格、对比图、信息图等场景，目标不是像素级复刻，而是提取核心信息后重新组织、润色和设计。
 
-升级版采用模块化生产链路：来源信息提取、文案润色、信息架构重组、视觉模式选择、HTML 模板复用、可读性校验和高清截图导出。
+升级版采用模块化生产链路：来源信息提取、文案润色、信息架构重组、视觉模式选择、HTML 模板复用、可读性校验和高清截图导出。同时内置 Guizang 启发的电子杂志、瑞士网格、社媒长图和发布页风格预设。
 
 核心流程：
 
@@ -48,7 +48,7 @@ Best for:
 2. 按需求去除平台品牌、水印、装饰性文字和无关来源信息。
 3. 在保留核心事实的前提下，把密集文案润色为更易懂的表达。
 4. 将信息重构为结论卡片、对象卡片、关键差异区、分组矩阵或长图报告结构。
-5. 选择合适的视觉模式，例如橙白决策页、干净报告、瑞士网格或杂志解释页。
+5. 选择合适的视觉模式，例如橙白决策页、干净报告、Guizang 启发的电子杂志、瑞士国际主义网格、社媒卡片或发布页。
 6. 结合内置模板制作独立 HTML 页面。
 7. 校验字号、长单元格、输出画幅和截图可读性。
 8. 最终截图前先让用户确认 HTML 方向。
@@ -72,10 +72,13 @@ skills/
     assets/
       templates/
         comparison-dashboard.html
+        editorial-ink-report.html
         long-report.html
+        swiss-grid-brief.html
     references/
       content-rewrite.md
       design-modes.md
+      guizang-style-presets.md
       layout-recipes.md
       qa-checklist.md
       readability-export.md
@@ -115,6 +118,25 @@ Use $text-image-to-html-visual to extract this text-heavy comparison image, rewr
 ```text
 用 $text-image-to-html-visual 处理这张文字图：提取核心信息，润色文案，制作精美 HTML，先让我确认，再导出高清截图。
 ```
+
+Style-specific examples / 指定风格示例：
+
+```text
+Use $text-image-to-html-visual to rebuild this screenshot as a Guizang-inspired Swiss International grid brief.
+```
+
+```text
+用 $text-image-to-html-visual 把这张文字图重构成 Guizang 启发的电子杂志长图，保留核心事实，润色文案。
+```
+
+## Built-In Visual Styles / 内置视觉风格
+
+- `orange-white-decision`: warm user-facing decision page / 橙白决策页
+- `clean-report`: professional evidence-led report / 专业报告页
+- `editorial-ink`: Guizang-inspired electronic magazine and ink-paper style / Guizang 启发的电子杂志与电子墨水风
+- `swiss-international`: strict grid, one accent, sans-only Swiss style / 瑞士国际主义网格风
+- `social-card-system`: vertical shareable card or long image / 社媒长图与卡片系统
+- `launch-slide`: product update or announcement summary / 产品升级与发布页
 
 ## High-Resolution Screenshot Script / 高清截图脚本
 

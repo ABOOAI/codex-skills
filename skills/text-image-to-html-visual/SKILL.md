@@ -1,6 +1,6 @@
 ---
 name: text-image-to-html-visual
-description: Turn a text-heavy image, screenshot, poster, chart, table, or reference graphic into a polished HTML visual. Use when the user provides a "文字图", comparison screenshot, dense table image, infographic, or pasted image and asks to extract information, rewrite/polish wording, preserve core facts, create a beautiful HTML page/card/report, ask for confirmation before final screenshot, and export a high-resolution PNG.
+description: Turn a text-heavy image, screenshot, poster, chart, table, or reference graphic into a polished HTML visual. Use when the user provides a "文字图", comparison screenshot, dense table image, infographic, or pasted image and asks to extract information, rewrite/polish wording, preserve core facts, create a beautiful HTML page/card/report, optionally use Guizang-inspired styles such as editorial ink, Swiss grid, social card, or launch-slide, ask for confirmation before final screenshot, and export a high-resolution PNG.
 ---
 
 # Text Image to HTML Visual
@@ -31,13 +31,14 @@ This skill is for reconstruction, not pixel-level copying. Treat the image as so
 
 4. Choose the visual mode
    - Read `references/design-modes.md` when choosing colors, typography, spacing, and visual tone.
+   - Read `references/guizang-style-presets.md` when the user asks for Guizang style, magazine style, Swiss style, social-card style, or launch-slide style.
    - Prefer a clear user-facing design over visual similarity to the reference.
    - Remove source platform branding, watermarks, and unrelated reference labels unless the user asks to keep them.
 
 5. Build HTML
    - Create a standalone HTML file unless the user requested a framework.
    - Use CSS that is screenshot-friendly: fixed export width, stable grid dimensions, high contrast, readable font sizes, and enough row spacing.
-   - Reuse `assets/templates/comparison-dashboard.html` or `assets/templates/long-report.html` when they match the task.
+   - Reuse `assets/templates/comparison-dashboard.html`, `assets/templates/long-report.html`, `assets/templates/editorial-ink-report.html`, or `assets/templates/swiss-grid-brief.html` when they match the task.
    - Keep the generated HTML editable and self-contained.
    - Do not use decorative elements that reduce readability.
 

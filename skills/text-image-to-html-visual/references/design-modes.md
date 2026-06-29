@@ -81,6 +81,8 @@ Avoid:
 - Overusing this mode for consumer-facing pages that need warmth.
 - Tiny labels or decorative microtype that harms screenshot readability.
 
+For Guizang-inspired Swiss rules, read `guizang-style-presets.md` and use `swiss-international`.
+
 ## Mode: Magazine Explainer
 
 Use for narrative screenshots, article covers, or concept-heavy long images.
@@ -99,6 +101,25 @@ Use for:
 Avoid:
 
 - Heavy texture or atmospheric treatment when exact data comparison is the main job.
+
+For Guizang-inspired magazine rules, read `guizang-style-presets.md` and use `editorial-ink`.
+
+## Mode: Guizang-Inspired Presets
+
+Use `references/guizang-style-presets.md` when the user asks for:
+
+- "Guizang style", "归藏风", "电子杂志", "电子墨水", "杂志风".
+- "瑞士风", "Swiss Style", "Helvetica", "网格", "极简数据感".
+- "小红书长图", "社媒卡片", "发布会风", "产品升级发布页".
+
+Available presets:
+
+- `editorial-ink`: magazine-feature pacing with paper, ink, serif display, pull quotes, ledger rows, and atmosphere.
+- `swiss-international`: strict sans grid, one accent, hairline rules, light huge type, no shadows or rounded cards.
+- `social-card-system`: vertical shareable long image with one idea per module and high readability.
+- `launch-slide`: one-page announcement or product upgrade summary.
+
+Use the style preset as a design system, not as decoration. The source facts and rewritten information structure still come first.
 
 ## Semantic Color
 
