@@ -3,8 +3,8 @@
 Personal repository for reusable Codex skills.  
 这是一个用于备份和分发个人 Codex skills 的仓库。
 
-> Sharing note: this repository is currently private. To let others install from it, either invite them as collaborators or make the repository public.  
-> 分享说明：当前仓库是私有仓库。别人要安装其中的 skill，需要你邀请对方为协作者，或将仓库改为公开仓库。
+> Sharing note: this repository is public. Others can clone it directly and copy the skill folder into their local Codex skills directory.  
+> 分享说明：当前仓库是公开仓库。别人可以直接 clone 仓库，并将 skill 文件夹复制到本地 Codex skills 目录中安装。
 
 ## Skills / 技能列表
 
