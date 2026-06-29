@@ -19,6 +19,15 @@ DEFAULT_CHROME_CANDIDATES = [
     r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe",
 ]
 
+PROFILES = {
+    "standard": {"width": 2200, "height": 6200, "scale": 2.0},
+    "dense": {"width": 3000, "height": 9000, "scale": 2.0},
+    "ultra": {"width": 3800, "height": 12000, "scale": 2.0},
+    "social-long": {"width": 1440, "height": 9000, "scale": 3.0},
+    "slide": {"width": 1920, "height": 1080, "scale": 2.0},
+    "a4": {"width": 1500, "height": 2200, "scale": 2.0},
+}
+
 
 def find_browser(explicit: str | None) -> str:
     if explicit:
@@ -68,14 +77,24 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Export HTML/URL to high-resolution PNG.")
     parser.add_argument("input", help="Input HTML file or URL")
     parser.add_argument("output", help="Output PNG path")
-    parser.add_argument("--width", type=int, default=2600, help="Viewport width before scaling")
-    parser.add_argument("--height", type=int, default=7600, help="Viewport height before scaling")
-    parser.add_argument("--scale", type=float, default=2.0, help="Device scale factor")
+    parser.add_argument(
+        "--profile",
+        choices=sorted(PROFILES),
+        help="Preset export profile. Explicit width/height/scale override the profile.",
+    )
+    parser.add_argument("--width", type=int, help="Viewport width before scaling")
+    parser.add_argument("--height", type=int, help="Viewport height before scaling")
+    parser.add_argument("--scale", type=float, help="Device scale factor")
     parser.add_argument("--browser", help="Path to Chrome/Edge")
     parser.add_argument("--no-crop", action="store_true", help="Do not crop bottom whitespace")
     parser.add_argument("--crop-tolerance", type=int, default=18, help="Whitespace crop tolerance")
     parser.add_argument("--crop-padding", type=int, default=160, help="Bottom crop padding in final pixels")
     args = parser.parse_args()
+
+    profile = PROFILES[args.profile] if args.profile else {"width": 2600, "height": 7600, "scale": 2.0}
+    width = args.width or profile["width"]
+    height = args.height or profile["height"]
+    scale = args.scale or profile["scale"]
 
     browser = find_browser(args.browser)
     output = Path(args.output).resolve()
@@ -88,8 +107,8 @@ def main() -> int:
         "--disable-gpu",
         "--hide-scrollbars",
         "--disable-cache",
-        f"--force-device-scale-factor={args.scale}",
-        f"--window-size={args.width},{args.height}",
+        f"--force-device-scale-factor={scale}",
+        f"--window-size={width},{height}",
         f"--screenshot={output}",
         url,
     ]
@@ -107,7 +126,8 @@ def main() -> int:
         pass
 
     if final_size:
-        print(f"wrote {output} size={final_size[0]}x{final_size[1]}")
+        profile_label = args.profile or "custom"
+        print(f"wrote {output} size={final_size[0]}x{final_size[1]} profile={profile_label} viewport={width}x{height} scale={scale}")
     else:
         print(f"wrote {output}")
     return 0

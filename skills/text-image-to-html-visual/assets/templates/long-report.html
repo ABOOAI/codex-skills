@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Long Report Visual</title>
+  <style>
+    :root {
+      --bg: #fffaf5;
+      --paper: #ffffff;
+      --ink: #1f2937;
+      --muted: #6b7280;
+      --line: #fed7aa;
+      --accent: #f97316;
+      --accent-dark: #9a3412;
+      --soft: #ffedd5;
+      --green: #15803d;
+      --red: #b91c1c;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Inter", "Segoe UI", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+      letter-spacing: 0;
+    }
+
+    .page {
+      width: 1440px;
+      margin: 0 auto;
+      padding: 72px 78px 96px;
+    }
+
+    .masthead {
+      padding: 56px 0 44px;
+      border-bottom: 3px solid var(--line);
+    }
+
+    .label {
+      display: inline-flex;
+      align-items: center;
+      min-height: 38px;
+      padding: 0 16px;
+      border-radius: 999px;
+      background: var(--soft);
+      color: var(--accent-dark);
+      font-size: 20px;
+      font-weight: 850;
+    }
+
+    h1 {
+      max-width: 1100px;
+      margin: 22px 0 0;
+      font-size: 68px;
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      max-width: 1160px;
+      margin: 28px 0 0;
+      font-size: 30px;
+      line-height: 1.55;
+      color: #374151;
+      font-weight: 600;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 34px;
+    }
+
+    .summary-card,
+    .section,
+    .callout {
+      border: 2px solid var(--line);
+      border-radius: 8px;
+      background: var(--paper);
+      box-shadow: 0 18px 42px rgba(154, 76, 20, .07);
+    }
+
+    .summary-card {
+      padding: 24px 26px;
+    }
+
+    .summary-card strong {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--accent-dark);
+      font-size: 22px;
+    }
+
+    .summary-card span {
+      display: block;
+      font-size: 24px;
+      line-height: 1.42;
+    }
+
+    .section {
+      margin-top: 34px;
+      padding: 36px 40px;
+    }
+
+    .section h2 {
+      margin: 0 0 20px;
+      font-size: 40px;
+      line-height: 1.2;
+    }
+
+    .section p,
+    .section li {
+      font-size: 25px;
+      line-height: 1.56;
+    }
+
+    .section p {
+      margin: 0 0 18px;
+    }
+
+    .section ul {
+      margin: 0;
+      padding-left: 30px;
+    }
+
+    .evidence-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 22px;
+    }
+
+    .evidence {
+      padding: 24px 26px;
+      border-radius: 8px;
+      background: #fff7ed;
+      border: 1px solid var(--line);
+    }
+
+    .evidence .kicker {
+      margin: 0 0 10px;
+      color: var(--accent-dark);
+      font-size: 20px;
+      font-weight: 850;
+    }
+
+    .evidence p {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .mini-table {
+      width: 100%;
+      margin-top: 22px;
+      border-collapse: separate;
+      border-spacing: 0;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      table-layout: fixed;
+    }
+
+    .mini-table th,
+    .mini-table td {
+      padding: 18px 20px;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+      font-size: 22px;
+      line-height: 1.45;
+      overflow-wrap: anywhere;
+    }
+
+    .mini-table th {
+      background: var(--soft);
+      color: var(--accent-dark);
+      text-align: left;
+      font-weight: 850;
+    }
+
+    .mini-table tr:last-child td { border-bottom: 0; }
+    .mini-table th:last-child,
+    .mini-table td:last-child { border-right: 0; }
+
+    .callout {
+      margin-top: 34px;
+      padding: 32px 36px;
+      border-color: #fdba74;
+      background: #fff7ed;
+    }
+
+    .callout h2 {
+      margin: 0 0 14px;
+      color: var(--accent-dark);
+      font-size: 38px;
+    }
+
+    .callout p {
+      margin: 0;
+      font-size: 26px;
+      line-height: 1.52;
+    }
+
+    .good { color: var(--green); font-weight: 850; }
+    .risk { color: var(--red); font-weight: 850; }
+
+    .footer {
+      margin-top: 34px;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.45;
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="masthead">
+      <span class="label">文字图重构 / 长图报告</span>
+      <h1>把来源截图改写成一个更容易读懂的标题</h1>
+      <p class="lead">这里放 1-2 句核心摘要：说明原图里最值得关注的信息，以及这张新页面如何帮助读者快速理解。</p>
+      <div class="summary-grid">
+        <article class="summary-card">
+          <strong>结论一</strong>
+          <span>用短句保留原图核心事实。</span>
+        </article>
+        <article class="summary-card">
+          <strong>结论二</strong>
+          <span>突出重要数字或限制条件。</span>
+        </article>
+        <article class="summary-card">
+          <strong>结论三</strong>
+          <span>标记不确定字段或使用边界。</span>
+        </article>
+      </div>
+    </header>
+
+    <section class="section">
+      <h2>01 信息先重构</h2>
+      <p>每个段落只回答一个问题。不要把原图的长句原样搬进来，要压缩成读者能直接理解的表达。</p>
+      <div class="evidence-grid">
+        <article class="evidence">
+          <p class="kicker">保留</p>
+          <p>产品名、数字、条件、范围、例外、价格、时间等核心事实。</p>
+        </article>
+        <article class="evidence">
+          <p class="kicker">删除</p>
+          <p>水印、平台口号、重复标题、装饰性文字和无关来源信息。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>02 关键证据</h2>
+      <p>把源图中最重要的 3-5 个信息点放在这里。每个点都应该能回到原图事实，不要补充没有依据的结论。</p>
+      <table class="mini-table">
+        <thead>
+          <tr>
+            <th>维度</th>
+            <th>来源事实</th>
+            <th>重写后的表达</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>示例维度</td>
+            <td>替换为原图里的文字或数字。</td>
+            <td><span class="good">清晰表达：</span>改成短句，并保留数字。</td>
+          </tr>
+          <tr>
+            <td>注意事项</td>
+            <td>替换为原图里的限制或例外。</td>
+            <td><span class="risk">注意：</span>把风险或限制放在读者能看到的位置。</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <h2>03 读者怎么用</h2>
+      <ul>
+        <li>先看顶部结论，确定这张图解决的问题。</li>
+        <li>再看关键证据，理解主要差异。</li>
+        <li>最后看表格和备注，复核具体数字与限制。</li>
+      </ul>
+    </section>
+
+    <aside class="callout">
+      <h2>备注</h2>
+      <p>本页面基于参考图重构，仅保留和改写来源中可见的信息；待确认字段应在最终交付前向用户说明。</p>
+    </aside>
+
+    <p class="footer">Template: long-report.html. Replace all placeholder copy with source-grounded facts before delivery.</p>
+  </main>
+</body>
+</html>

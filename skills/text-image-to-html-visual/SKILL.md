@@ -9,7 +9,9 @@ description: Turn a text-heavy image, screenshot, poster, chart, table, or refer
 
 Transform a text-heavy reference image into a clearer, more useful HTML visual. Preserve the source facts, improve the wording, redesign the information structure, and export a high-resolution screenshot only after the user confirms the HTML direction.
 
-## Workflow
+This skill is for reconstruction, not pixel-level copying. Treat the image as source evidence, then produce a better designed artifact for reading, comparison, sharing, or screenshot export.
+
+## Core Workflow
 
 1. Understand the source
    - Inspect the submitted image visually.
@@ -17,32 +19,27 @@ Transform a text-heavy reference image into a clearer, more useful HTML visual. 
    - Separate core facts from decorative text, watermarks, platform branding, redundant labels, and layout artifacts.
    - If OCR is unreliable, manually transcribe the visible information and flag uncertain fields.
 
-2. Define the output intent
-   - Infer the target audience and reading context: social image, article graphic, sales comparison, internal report, product card, checklist, dashboard, etc.
-   - Decide whether the best output is a decision page, comparison table, infographic, summary card, report page, or carousel-like long page.
-   - Do not merely replicate the reference layout unless the user explicitly asks for faithful recreation.
+2. Rewrite the information
+   - Read `references/content-rewrite.md` for extraction, compression, and copy polishing rules.
+   - Preserve material facts, numbers, product names, limits, exclusions, risk notes, and caveats.
+   - Do not invent rankings, recommendations, compliance claims, medical claims, financial claims, or insurance conclusions not supported by the source.
 
-3. Rewrite the copy
-   - Preserve material facts, numbers, product names, limits, risk notes, and caveats.
-   - Rewrite dense wording into short user-facing statements.
-   - Prefer "conclusion + condition + caveat" phrasing.
-   - Use explicit labels such as "Best for", "Watch out", "Key advantage", "Limit", "Price example", and "Decision point" when they make the page easier to scan.
-   - Keep legal, medical, insurance, financial, and compliance-sensitive claims conservative; avoid inventing recommendations not supported by the source.
+3. Choose the output model
+   - Read `references/layout-recipes.md` when deciding the page structure.
+   - Use a summary-first structure for dense comparisons: conclusion, key differences, entity cards, then detailed matrix.
+   - Split very dense source tables into sections instead of forcing one huge table.
 
-4. Redesign the information architecture
-   - Put the most important conclusion first.
-   - Add a top summary or "how to choose" section for dense comparisons.
-   - Use product/entity cards for per-item positioning.
-   - Use a key-differences section before the full detail table.
-   - Put detailed matrices after the summary, not before it.
-   - Downplay rows where every option is identical unless the user needs an exhaustive archive.
+4. Choose the visual mode
+   - Read `references/design-modes.md` when choosing colors, typography, spacing, and visual tone.
+   - Prefer a clear user-facing design over visual similarity to the reference.
+   - Remove source platform branding, watermarks, and unrelated reference labels unless the user asks to keep them.
 
 5. Build HTML
    - Create a standalone HTML file unless the user requested a framework.
    - Use CSS that is screenshot-friendly: fixed export width, stable grid dimensions, high contrast, readable font sizes, and enough row spacing.
-   - Avoid decorative elements that reduce readability.
-   - Remove source platform branding, watermarks, and unrelated reference labels unless the user asks to keep them.
+   - Reuse `assets/templates/comparison-dashboard.html` or `assets/templates/long-report.html` when they match the task.
    - Keep the generated HTML editable and self-contained.
+   - Do not use decorative elements that reduce readability.
 
 6. Confirm before final screenshot
    - Share the HTML path or preview status.
@@ -52,37 +49,8 @@ Transform a text-heavy reference image into a clearer, more useful HTML visual. 
 
 7. Export high-resolution screenshot
    - Use `scripts/export_highres_screenshot.py` when Chrome is available.
-   - Prefer wide export dimensions for dense text:
-     - Standard: width 2200-2600, scale 2
-     - Very dense: width 2800-3200, scale 2
-   - Export PNG, then crop bottom whitespace.
-   - Verify dimensions and visually inspect the output.
-
-## Design Rules
-
-- Design for first-glance comprehension, not pixel similarity.
-- Use hierarchy: headline, conclusion cards, item cards, key differences, detail table.
-- Make numbers and limits visually findable.
-- Use color semantically:
-  - Green for relative advantage.
-  - Orange or brand color for key differences.
-  - Red for limits, exclusions, or risks.
-- Use fewer words per cell; if a cell needs many words, move the explanation into a key-difference card.
-- Avoid making one huge dense table the whole artifact.
-- For screenshot work, increase HTML canvas width and font sizes before exporting rather than relying on image upscaling.
-
-## Copy Rules
-
-Rewrite examples:
-
-- Dense: "10年保证续保：医保内医疗费/质子重离子；非保证续保：医保外医疗费/癌症外购药/重疾特需"
-- Clear: "医保内医疗费、质子重离子可 10 年保证续保；医保外、外购药和重疾特需不保证续保。"
-
-- Dense: "30天，意外伤害无等待期"
-- Clear: "等待期 30 天；意外伤害无等待期。"
-
-- Dense: "医保内：5000元；医保外：1万"
-- Clear: "医保内一般医疗免赔 5000 元；医保外免赔 1 万。"
+   - Read `references/readability-export.md` before exporting dense pages.
+   - Export PNG, crop bottom whitespace, report dimensions, and visually inspect the output.
 
 ## Required Validation
 
@@ -91,8 +59,9 @@ Before handing off:
 - Confirm no important source facts were dropped.
 - Confirm source-brand/platform text was removed when requested.
 - Check long words and dense Chinese lines do not overlap.
-- Check the HTML works at the intended screenshot width.
-- Check the final PNG dimensions and file exists.
+- Check the HTML works at the intended screenshot width and output profile.
+- Run `scripts/validate_html_visual.py` on the HTML when time permits.
+- Check the final PNG dimensions and file exists when producing a screenshot.
 - If producing a screenshot, include the screenshot path and render it inline when possible.
 
-For a compact checklist, read `references/visual-html-checklist.md`.
+Read `references/qa-checklist.md` for the full handoff checklist. `references/visual-html-checklist.md` remains as a compact checklist for quick jobs.

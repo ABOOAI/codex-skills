@@ -2,6 +2,14 @@
 
 Use this checklist before final handoff.
 
+For detailed rules, read:
+
+- `content-rewrite.md` for extraction and copy polishing.
+- `layout-recipes.md` for information architecture.
+- `design-modes.md` for visual direction.
+- `readability-export.md` for screenshot sizing.
+- `qa-checklist.md` for the full delivery checklist.
+
 ## Information
 
 - All visible source entities and important numbers are represented.

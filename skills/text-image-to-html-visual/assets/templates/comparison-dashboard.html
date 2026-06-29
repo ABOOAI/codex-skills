@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Comparison Dashboard</title>
+  <style>
+    :root {
+      --bg: #fff7ed;
+      --surface: #ffffff;
+      --surface-soft: #fff3e0;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --line: #fed7aa;
+      --accent: #f97316;
+      --accent-strong: #ea580c;
+      --good: #16a34a;
+      --risk: #dc2626;
+      --same: #64748b;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Inter", "Segoe UI", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+      letter-spacing: 0;
+    }
+
+    .canvas {
+      width: 2800px;
+      margin: 0 auto;
+      padding: 84px 96px 110px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 56px;
+      align-items: end;
+      padding-bottom: 52px;
+      border-bottom: 3px solid var(--line);
+    }
+
+    .eyebrow {
+      margin: 0 0 18px;
+      color: var(--accent-strong);
+      font-size: 28px;
+      font-weight: 800;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 82px;
+      line-height: 1.04;
+      letter-spacing: 0;
+    }
+
+    .summary {
+      margin: 0;
+      padding: 32px 36px;
+      border: 2px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface);
+      font-size: 32px;
+      line-height: 1.48;
+      font-weight: 650;
+    }
+
+    .section {
+      margin-top: 54px;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 24px;
+      font-size: 40px;
+      line-height: 1.2;
+      font-weight: 850;
+    }
+
+    .section-title::before {
+      content: "";
+      width: 14px;
+      height: 44px;
+      border-radius: 8px;
+      background: var(--accent);
+    }
+
+    .difference-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 22px;
+    }
+
+    .diff-card,
+    .entity-card,
+    .note-card {
+      border: 2px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface);
+      box-shadow: 0 18px 44px rgba(154, 76, 20, .08);
+    }
+
+    .diff-card {
+      padding: 28px 30px;
+      min-height: 180px;
+    }
+
+    .card-kicker {
+      margin: 0 0 12px;
+      color: var(--accent-strong);
+      font-size: 22px;
+      font-weight: 850;
+    }
+
+    .diff-card p,
+    .entity-card p,
+    .note-card p {
+      margin: 0;
+      font-size: 26px;
+      line-height: 1.42;
+    }
+
+    .entity-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 22px;
+    }
+
+    .entity-card {
+      padding: 30px;
+    }
+
+    .entity-card h3 {
+      margin: 0 0 16px;
+      font-size: 34px;
+      line-height: 1.16;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 36px;
+      padding: 0 14px;
+      border-radius: 999px;
+      background: var(--surface-soft);
+      color: var(--accent-strong);
+      font-size: 20px;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .tag.good { color: var(--good); background: #ecfdf5; }
+    .tag.risk { color: var(--risk); background: #fef2f2; }
+    .tag.same { color: var(--same); background: #f1f5f9; }
+
+    .matrix {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      overflow: hidden;
+      border: 2px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface);
+      table-layout: fixed;
+    }
+
+    .matrix th,
+    .matrix td {
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      padding: 22px 24px;
+      vertical-align: top;
+      font-size: 24px;
+      line-height: 1.42;
+      overflow-wrap: anywhere;
+    }
+
+    .matrix th {
+      background: #ffedd5;
+      color: #7c2d12;
+      font-size: 24px;
+      font-weight: 850;
+      text-align: left;
+    }
+
+    .matrix tr.group th {
+      background: var(--accent);
+      color: #fff;
+      font-size: 26px;
+    }
+
+    .matrix td:first-child {
+      width: 250px;
+      color: #7c2d12;
+      background: #fff7ed;
+      font-weight: 850;
+    }
+
+    .matrix tr:last-child td,
+    .matrix tr:last-child th { border-bottom: 0; }
+    .matrix td:last-child,
+    .matrix th:last-child { border-right: 0; }
+
+    .note-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .note-card {
+      padding: 26px 30px;
+    }
+
+    .footer {
+      margin-top: 54px;
+      color: var(--muted);
+      font-size: 22px;
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body>
+  <main class="canvas">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">文字图重构 / 对比看板</p>
+        <h1>在这里放清晰、直接的对比标题</h1>
+      </div>
+      <p class="summary">一句话说明读者应该先看什么：例如，这组产品主要差异集中在续保规则、免赔额、外购药和价格。</p>
+    </header>
+
+    <section class="section">
+      <h2 class="section-title">关键差异</h2>
+      <div class="difference-grid">
+        <article class="diff-card">
+          <p class="card-kicker">差异 01</p>
+          <p>保留核心数字，用短句说明哪个对象在该维度更突出。</p>
+        </article>
+        <article class="diff-card">
+          <p class="card-kicker">差异 02</p>
+          <p>把复杂限制写成条件句，避免长串斜杠式表达。</p>
+        </article>
+        <article class="diff-card">
+          <p class="card-kicker">差异 03</p>
+          <p>把风险、例外、待确认字段放在读者能看见的位置。</p>
+        </article>
+        <article class="diff-card">
+          <p class="card-kicker">差异 04</p>
+          <p>相同项可以汇总，避免表格被不重要信息淹没。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">对象定位</h2>
+      <div class="entity-grid">
+        <article class="entity-card">
+          <h3>产品 A</h3>
+          <p>一句话说明它的核心优势和主要限制。</p>
+          <div class="tags">
+            <span class="tag good">优势标签</span>
+            <span class="tag risk">注意限制</span>
+          </div>
+        </article>
+        <article class="entity-card">
+          <h3>产品 B</h3>
+          <p>一句话说明它适合什么阅读或决策场景。</p>
+          <div class="tags">
+            <span class="tag">重点差异</span>
+            <span class="tag same">相同项</span>
+          </div>
+        </article>
+        <article class="entity-card">
+          <h3>产品 C</h3>
+          <p>保留来源事实，不要补充原图没有支持的结论。</p>
+          <div class="tags">
+            <span class="tag">待替换</span>
+          </div>
+        </article>
+        <article class="entity-card">
+          <h3>产品 D</h3>
+          <p>如果内容很多，把长解释放到下方备注区。</p>
+          <div class="tags">
+            <span class="tag">待替换</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">详细矩阵</h2>
+      <table class="matrix">
+        <thead>
+          <tr>
+            <th>维度</th>
+            <th>产品 A</th>
+            <th>产品 B</th>
+            <th>产品 C</th>
+            <th>产品 D</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="group">
+            <th colspan="5">分组一：核心规则</th>
+          </tr>
+          <tr>
+            <td>关键字段</td>
+            <td>短句 + 关键数字。</td>
+            <td>短句 + 条件。</td>
+            <td>短句 + 限制。</td>
+            <td>短句 + 待确认项。</td>
+          </tr>
+          <tr>
+            <td>相同项</td>
+            <td colspan="4">如果四列完全一致，可以合并说明，降低阅读负担。</td>
+          </tr>
+          <tr class="group">
+            <th colspan="5">分组二：费用与权益</th>
+          </tr>
+          <tr>
+            <td>价格示例</td>
+            <td>替换为来源数字。</td>
+            <td>替换为来源数字。</td>
+            <td>替换为来源数字。</td>
+            <td>替换为来源数字。</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">备注与待确认</h2>
+      <div class="note-grid">
+        <article class="note-card">
+          <p class="card-kicker">来源处理</p>
+          <p>说明已删除的水印、平台文字或装饰性内容。</p>
+        </article>
+        <article class="note-card">
+          <p class="card-kicker">待确认</p>
+          <p>列出原图识别不清或需要用户复核的字段。</p>
+        </article>
+        <article class="note-card">
+          <p class="card-kicker">使用边界</p>
+          <p>提醒页面仅基于参考图重构，不替代专业建议。</p>
+        </article>
+      </div>
+    </section>
+
+    <p class="footer">Template: comparison-dashboard.html. Replace all placeholder copy with source-grounded facts before delivery.</p>
+  </main>
+</body>
+</html>

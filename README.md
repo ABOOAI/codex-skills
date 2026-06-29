@@ -14,15 +14,19 @@ Personal repository for reusable Codex skills.
 
 Turn a text-heavy reference image into a polished HTML visual. The skill is designed for screenshots, posters, dense tables, comparison charts, and infographic-like images where the user wants a clearer, better-designed output instead of a pixel-level recreation.
 
+The upgraded version uses a modular production workflow: source extraction, copy rewriting, information architecture, design-mode selection, reusable HTML templates, readability QA, and high-resolution screenshot export.
+
 Core workflow:
 
 1. Extract text, numbers, categories, labels, caveats, and comparison points from the source image.
 2. Remove irrelevant platform branding, watermarks, and decorative text when requested.
 3. Rewrite dense copy into clearer user-facing language while preserving the core facts.
-4. Redesign the information architecture into conclusion cards, item cards, key differences, and detailed matrices.
-5. Build a standalone HTML page.
-6. Ask the user to confirm the HTML direction before final export.
-7. Export a high-resolution screenshot with the bundled Chrome/Edge screenshot script.
+4. Redesign the information architecture into conclusion cards, item cards, key differences, grouped matrices, or long-report sections.
+5. Select a suitable visual mode such as orange-white decision page, clean report, Swiss grid, or magazine explainer.
+6. Build a standalone HTML page using reusable templates when appropriate.
+7. Validate readability, dense table cells, font sizes, and output profile.
+8. Ask the user to confirm the HTML direction before final export.
+9. Export a high-resolution screenshot with the bundled Chrome/Edge screenshot script.
 
 Best for:
 
@@ -36,15 +40,19 @@ Best for:
 
 将文字密集的参考图重构为更清晰、更美观的 HTML 视觉页面。适用于截图、海报、密集表格、对比图、信息图等场景，目标不是像素级复刻，而是提取核心信息后重新组织、润色和设计。
 
+升级版采用模块化生产链路：来源信息提取、文案润色、信息架构重组、视觉模式选择、HTML 模板复用、可读性校验和高清截图导出。
+
 核心流程：
 
 1. 从参考图中提取文字、数字、分类、标签、限制条件和对比点。
 2. 按需求去除平台品牌、水印、装饰性文字和无关来源信息。
 3. 在保留核心事实的前提下，把密集文案润色为更易懂的表达。
-4. 将信息重构为结论卡片、对象卡片、关键差异区和详细参数矩阵。
-5. 制作独立 HTML 页面。
-6. 最终截图前先让用户确认 HTML 方向。
-7. 使用内置 Chrome/Edge 截图脚本导出高清 PNG。
+4. 将信息重构为结论卡片、对象卡片、关键差异区、分组矩阵或长图报告结构。
+5. 选择合适的视觉模式，例如橙白决策页、干净报告、瑞士网格或杂志解释页。
+6. 结合内置模板制作独立 HTML 页面。
+7. 校验字号、长单元格、输出画幅和截图可读性。
+8. 最终截图前先让用户确认 HTML 方向。
+9. 使用内置 Chrome/Edge 截图脚本导出高清 PNG。
 
 适合场景：
 
@@ -61,10 +69,20 @@ skills/
   text-image-to-html-visual/
     SKILL.md
     agents/openai.yaml
+    assets/
+      templates/
+        comparison-dashboard.html
+        long-report.html
     references/
+      content-rewrite.md
+      design-modes.md
+      layout-recipes.md
+      qa-checklist.md
+      readability-export.md
       visual-html-checklist.md
     scripts/
       export_highres_screenshot.py
+      validate_html_visual.py
 ```
 
 ## Installation / 安装方式
@@ -109,7 +127,26 @@ skills/text-image-to-html-visual/scripts/export_highres_screenshot.py
 Example:
 
 ```powershell
-python .\skills\text-image-to-html-visual\scripts\export_highres_screenshot.py .\example.html .\example-ultra.png --width 2600 --height 7600 --scale 2
+python .\skills\text-image-to-html-visual\scripts\export_highres_screenshot.py .\example.html .\example-ultra.png --profile ultra
 ```
 
 该脚本会调用本机 Chrome 或 Edge，将 HTML 导出为高分辨率 PNG，并可自动裁掉底部多余空白。
+
+Common export profiles / 常用导出档位：
+
+- `standard`: normal report or web preview / 普通报告或网页预览
+- `dense`: dense comparison table / 密集对比表
+- `ultra`: extra-large high-clarity comparison screenshot / 超高清密集长图
+- `social-long`: vertical social image / 社媒长图
+- `slide`: 16:9 presentation page / 汇报页
+
+## HTML Validation / HTML 可读性校验
+
+The skill also includes a lightweight validator:
+
+```powershell
+python .\skills\text-image-to-html-visual\scripts\validate_html_visual.py .\example.html --profile dense
+```
+
+It checks basic structure, screenshot-oriented font sizes, declared widths, and overly long table cells.  
+该脚本会检查页面结构、截图字号、声明宽度和过长表格单元格，帮助在交付前发现可读性问题。
