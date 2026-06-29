@@ -1,0 +1,4 @@
+interface:
+  display_name: "Text Image to HTML Visual"
+  short_description: "Turn text-heavy images into polished HTML visuals"
+  default_prompt: "Use $text-image-to-html-visual to extract a text-heavy reference image, rewrite the copy, build a polished HTML visual, confirm it, and export a high-resolution screenshot."
